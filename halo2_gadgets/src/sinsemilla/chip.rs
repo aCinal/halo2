@@ -1,5 +1,6 @@
 //! Chip implementations for the Sinsemilla gadgets.
 
+use alloc::vec::Vec;
 use super::{
     message::{Message, MessagePiece},
     primitives as sinsemilla, CommitDomains, HashDomains, SinsemillaInstructions,
@@ -11,7 +12,7 @@ use crate::{
     },
     utilities::lookup_range_check::{PallasLookupRangeCheck, PallasLookupRangeCheckConfig},
 };
-use std::marker::PhantomData;
+use core::marker::PhantomData;
 
 use halo2_proofs::{
     circuit::{AssignedCell, Chip, Layouter, Value},

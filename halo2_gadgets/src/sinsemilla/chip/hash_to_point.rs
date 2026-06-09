@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use super::super::{CommitDomains, HashDomains, SinsemillaInstructions};
 use super::{NonIdentityEccPoint, SinsemillaChip};
 use crate::{
@@ -15,7 +16,7 @@ use halo2_proofs::{
 use group::ff::{PrimeField, PrimeFieldBits};
 use pasta_curves::{arithmetic::CurveAffine, pallas};
 
-use std::ops::Deref;
+use core::ops::Deref;
 
 /// `EccPointQ` can hold either a public or a private ECC Point
 #[cfg(test)]

@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use ff::Field;
 use rand_core::RngCore;
 
@@ -9,7 +10,7 @@ use crate::arithmetic::{
 use crate::transcript::{EncodedChallenge, TranscriptWrite};
 
 use group::Curve;
-use std::io;
+use crate::io;
 
 /// Create a polynomial commitment opening proof for the polynomial defined
 /// by the coefficients `px`, the blinding factor `blind` used for the

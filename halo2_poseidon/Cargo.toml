@@ -17,8 +17,8 @@ categories = ["cryptography"]
 [dependencies]
 bitvec = { version = "1", default-features = false }
 ff = { version = "0.13", default-features = false }
-group = "0.13"
-pasta_curves = "0.5"
+group = { version = "0.13", default-features = false, features = ["alloc"] }
+pasta_curves = { version = "0.5", default-features = false, features = ["alloc"] }
 
 [features]
 test-dependencies = []

@@ -84,7 +84,7 @@ impl<F: PrimeField> Gate<F> {
             lagrange_poly - spread * factor
         };
 
-        std::iter::empty()
+        core::iter::empty()
             .chain(Some((
                 "two_bit_range_check",
                 Self::range_check(dense.clone(), 0, (1 << 2) - 1),
@@ -112,7 +112,7 @@ impl<F: PrimeField> Gate<F> {
             lagrange_poly - spread * factor
         };
 
-        std::iter::empty()
+        core::iter::empty()
             .chain(Some((
                 "three_bit_range_check",
                 Self::range_check(dense.clone(), 0, (1 << 3) - 1),

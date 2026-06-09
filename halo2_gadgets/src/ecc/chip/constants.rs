@@ -1,5 +1,6 @@
 //! Constants required for the ECC chip.
 
+use alloc::vec::Vec;
 use arrayvec::ArrayVec;
 use group::{
     ff::{Field, PrimeField},
@@ -230,6 +231,7 @@ pub fn test_lagrange_coeffs<C: CurveAffine>(base: C, num_windows: usize) {
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec::Vec;
     use ff::FromUniformBytes;
     use group::{ff::Field, Curve, Group};
     use pasta_curves::{arithmetic::CurveAffine, pallas};

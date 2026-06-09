@@ -1,7 +1,8 @@
 //! Gadget and chips for the Sinsemilla hash function.
 use ff::{Field, PrimeFieldBits};
 use halo2_proofs::circuit::{AssignedCell, Cell, Value};
-use std::fmt::Debug;
+use alloc::vec::Vec;
+use core::fmt::Debug;
 
 /// A [`Message`] composed of several [`MessagePiece`]s.
 #[derive(Clone, Debug)]
@@ -17,7 +18,7 @@ impl<F: PrimeFieldBits, const K: usize, const MAX_WORDS: usize> From<Vec<Message
     }
 }
 
-impl<F: PrimeFieldBits, const K: usize, const MAX_WORDS: usize> std::ops::Deref
+impl<F: PrimeFieldBits, const K: usize, const MAX_WORDS: usize> core::ops::Deref
     for Message<F, K, MAX_WORDS>
 {
     type Target = [MessagePiece<F, K>];

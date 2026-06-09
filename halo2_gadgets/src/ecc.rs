@@ -1,6 +1,6 @@
 //! Elliptic curve operations.
 
-use std::fmt::Debug;
+use core::fmt::Debug;
 
 use halo2_proofs::{
     arithmetic::CurveAffine,
@@ -624,9 +624,10 @@ impl<C: CurveAffine, EccChip: EccInstructions<C>> FixedPointShort<C, EccChip> {
 
 #[cfg(test)]
 pub(crate) mod tests {
+    use alloc::vec::Vec;
     use ff::PrimeField;
     use group::{prime::PrimeCurveAffine, Curve, Group};
-    use std::marker::PhantomData;
+    use core::marker::PhantomData;
 
     use halo2_proofs::{
         circuit::{Layouter, SimpleFloorPlanner, Value},

@@ -5,3 +5,4 @@ members = [
     "halo2_poseidon",
     "halo2_proofs",
 ]
+resolver = "2"

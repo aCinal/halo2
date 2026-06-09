@@ -1,5 +1,7 @@
 //! Functions used for circuit test.
 
+extern crate std;
+use alloc::vec::Vec;
 use std::{env, fs, path::Path};
 
 use rand::rngs::OsRng;

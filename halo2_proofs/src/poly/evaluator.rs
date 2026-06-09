@@ -1,9 +1,10 @@
-use std::{
+use alloc::sync::Arc;
+use alloc::vec::Vec;
+use core::{
     cmp, fmt,
     hash::{Hash, Hasher},
     marker::PhantomData,
     ops::{Add, Mul, MulAssign, Neg, Sub},
-    sync::Arc,
 };
 
 use ff::WithSmallOrderMulGroup;
@@ -635,12 +636,14 @@ mod tests {
             None => {
                 // We are on a machine with a power-of-two number of threads, and cannot
                 // trigger the bug.
+                #[cfg(feature = "std")]
                 eprintln!(
                     "can't find a polynomial length for short_chunk_regression_test; skipping"
                 );
                 return;
             }
         };
+        #[cfg(feature = "std")]
         eprintln!("Testing short-chunk regression with k = {}", k);
 
         fn test_case<E: Copy + Send + Sync, B: BasisOps>(

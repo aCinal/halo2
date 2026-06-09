@@ -1,8 +1,9 @@
 //! Implementations of common circuit layouters.
 
-use std::cmp;
-use std::collections::HashSet;
-use std::fmt;
+use alloc::string::String;
+use core::cmp;
+use core::fmt;
+use crate::collections::HashSet;
 
 use ff::Field;
 
@@ -176,7 +177,7 @@ impl RegionShape {
     }
 
     /// Get a reference to the set of `columns` used in a `RegionShape`.
-    pub fn columns(&self) -> &HashSet<RegionColumn> {
+    pub(crate) fn columns(&self) -> &HashSet<RegionColumn> {
         &self.columns
     }
 

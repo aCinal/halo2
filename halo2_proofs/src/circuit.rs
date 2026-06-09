@@ -1,6 +1,7 @@
 //! Traits and structs for implementing circuit components.
 
-use std::{fmt, marker::PhantomData};
+use alloc::string::String;
+use core::{fmt, marker::PhantomData};
 
 use ff::Field;
 
@@ -58,7 +59,7 @@ impl From<usize> for RegionIndex {
     }
 }
 
-impl std::ops::Deref for RegionIndex {
+impl core::ops::Deref for RegionIndex {
     type Target = usize;
 
     fn deref(&self) -> &Self::Target {
@@ -76,7 +77,7 @@ impl From<usize> for RegionStart {
     }
 }
 
-impl std::ops::Deref for RegionStart {
+impl core::ops::Deref for RegionStart {
     type Target = usize;
 
     fn deref(&self) -> &Self::Target {

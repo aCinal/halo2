@@ -1,14 +1,15 @@
 //! This module contains utilities and traits for dealing with Fiat-Shamir
 //! transcripts.
 
+use alloc::vec::Vec;
 use blake2b_simd::{Params as Blake2bParams, State as Blake2bState};
 use group::ff::{FromUniformBytes, PrimeField};
-use std::convert::TryInto;
+use core::convert::TryInto;
 
 use crate::arithmetic::{Coordinates, CurveAffine};
 
-use std::io::{self, Read, Write};
-use std::marker::PhantomData;
+use crate::io::{self, Read, Write};
+use core::marker::PhantomData;
 
 /// Prefix to a prover's message soliciting a challenge
 const BLAKE2B_PREFIX_CHALLENGE: u8 = 0;
@@ -236,7 +237,7 @@ pub struct ChallengeScalar<C: CurveAffine, T> {
     _marker: PhantomData<T>,
 }
 
-impl<C: CurveAffine, T> std::ops::Deref for ChallengeScalar<C, T> {
+impl<C: CurveAffine, T> core::ops::Deref for ChallengeScalar<C, T> {
     type Target = C::Scalar;
 
     fn deref(&self) -> &Self::Target {
@@ -272,7 +273,7 @@ pub trait EncodedChallenge<C: CurveAffine> {
 #[derive(Copy, Clone, Debug)]
 pub struct Challenge255<C: CurveAffine>([u8; 32], PhantomData<C>);
 
-impl<C: CurveAffine> std::ops::Deref for Challenge255<C> {
+impl<C: CurveAffine> core::ops::Deref for Challenge255<C> {
     type Target = [u8; 32];
 
     fn deref(&self) -> &Self::Target {

@@ -10,7 +10,7 @@ use halo2_proofs::{
     poly::Rotation,
 };
 use pasta_curves::pallas;
-use std::marker::PhantomData;
+use core::marker::PhantomData;
 
 /// Instructions for conditional swap and mux gadgets.
 pub trait CondSwapInstructions<F: Field>: UtilitiesInstructions<F> {
@@ -312,7 +312,7 @@ mod tests {
     };
     use pasta_curves::pallas::Base;
     use rand::rngs::OsRng;
-    use std::marker::PhantomData;
+    use core::marker::PhantomData;
 
     #[test]
     fn cond_swap() {

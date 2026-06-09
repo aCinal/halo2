@@ -1,5 +1,6 @@
-use std::convert::TryInto;
-use std::iter;
+use alloc::vec::Vec;
+use core::convert::TryInto;
+use core::iter;
 
 use group::ff::Field;
 use halo2_proofs::{
@@ -149,7 +150,7 @@ impl<F: Field, const WIDTH: usize, const RATE: usize> Pow5Chip<F, WIDTH, RATE> {
 
             Constraints::with_selector(
                 s_partial,
-                std::iter::empty()
+                core::iter::empty()
                     // state[0] round a
                     .chain(Some(pow_5(cur_0 + rc_a0) - mid_0.clone()))
                     // state[0] round b
@@ -475,7 +476,7 @@ impl<F: Field, const WIDTH: usize> Pow5State<F, WIDTH> {
                     .iter()
                     .enumerate()
                     .map(|(i, p_i)| *p_i + config.round_constants[round][i + 1]);
-                std::iter::empty().chain(Some(r_0)).chain(r_i).collect()
+                core::iter::empty().chain(Some(r_0)).chain(r_i).collect()
             });
 
             region.assign_advice(
@@ -515,7 +516,7 @@ impl<F: Field, const WIDTH: usize> Pow5State<F, WIDTH> {
                     .iter()
                     .enumerate()
                     .map(|(i, p_i)| *p_i + config.round_constants[round + 1][i + 1]);
-                std::iter::empty().chain(Some(r_0)).chain(r_i).collect()
+                core::iter::empty().chain(Some(r_0)).chain(r_i).collect()
             });
 
             let state: Vec<Value<_>> = m
@@ -594,6 +595,7 @@ impl<F: Field, const WIDTH: usize> Pow5State<F, WIDTH> {
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec::Vec;
     use group::ff::{Field, PrimeField};
     use halo2_proofs::{
         circuit::{Layouter, SimpleFloorPlanner, Value},
@@ -611,8 +613,8 @@ mod tests {
         primitives::{self as poseidon, ConstantLength, P128Pow5T3 as OrchardNullifier, Spec},
         Hash,
     };
-    use std::convert::TryInto;
-    use std::marker::PhantomData;
+    use core::convert::TryInto;
+    use core::marker::PhantomData;
 
     struct MyPermuteCircuit<S: Spec<Fp, WIDTH, RATE>, const WIDTH: usize, const RATE: usize>(
         PhantomData<S>,

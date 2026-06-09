@@ -1,4 +1,4 @@
-use std::io;
+use crate::io;
 
 use pasta_curves::arithmetic::CurveAffine;
 

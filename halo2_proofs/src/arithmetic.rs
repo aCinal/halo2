@@ -2,11 +2,15 @@
 //! field and polynomial arithmetic.
 
 pub use ff::Field;
+use alloc::vec::Vec;
 use group::{
     ff::{BatchInvert, PrimeField},
     Group as _, GroupOpsOwned, ScalarMulOwned,
 };
+#[cfg(feature = "multicore")]
 use maybe_rayon::prelude::*;
+#[cfg(not(feature = "multicore"))]
+use crate::multicore::prelude::*;
 pub use pasta_curves::arithmetic::*;
 
 use crate::multicore::{self, TheBestReduce};
@@ -148,7 +152,11 @@ pub fn best_multiexp<C: CurveAffine>(coeffs: &[C::Scalar], bases: &[C]) -> C::Cu
     } else if bases.len() < 32 {
         3
     } else {
-        (f64::from(bases.len() as u32)).ln().ceil() as usize
+        {
+            let n = f64::from(bases.len() as u32);
+            #[cfg(feature = "std")] { n.ln().ceil() as usize }
+            #[cfg(not(feature = "std"))] { libm::ceil(libm::log(n)) as usize }
+        }
     };
 
     let mut multi_buckets: Vec<Buckets<C>> = vec![Buckets::new(c); (256 / c) + 1];
@@ -413,13 +421,13 @@ pub fn lagrange_interpolate<F: Field>(points: &[F], evals: &[F]) -> Vec<F> {
                 product.resize(tmp.len() + 1, F::ZERO);
                 for ((a, b), product) in tmp
                     .iter()
-                    .chain(std::iter::once(&F::ZERO))
-                    .zip(std::iter::once(&F::ZERO).chain(tmp.iter()))
+                    .chain(core::iter::once(&F::ZERO))
+                    .zip(core::iter::once(&F::ZERO).chain(tmp.iter()))
                     .zip(product.iter_mut())
                 {
                     *product = *a * (-denom * x_k) + *b * denom;
                 }
-                std::mem::swap(&mut tmp, &mut product);
+                core::mem::swap(&mut tmp, &mut product);
             }
             assert_eq!(tmp.len(), points.len());
             assert_eq!(product.len(), points.len() - 1);

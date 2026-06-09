@@ -2,7 +2,7 @@ use super::super::Gate;
 
 use group::ff::{Field, PrimeField};
 use halo2_proofs::plonk::Expression;
-use std::marker::PhantomData;
+use core::marker::PhantomData;
 
 pub struct ScheduleGate<F: Field>(PhantomData<F>);
 

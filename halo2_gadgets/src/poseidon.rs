@@ -1,7 +1,7 @@
 //! The Poseidon algebraic hash function.
 
-use std::fmt;
-use std::marker::PhantomData;
+use core::fmt;
+use core::marker::PhantomData;
 
 use group::ff::{Field, PrimeField};
 use halo2_proofs::{

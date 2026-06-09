@@ -1,9 +1,10 @@
+use alloc::vec::Vec;
 use group::{
     ff::{BatchInvert, Field, PrimeField},
     Curve,
 };
 use rand_core::RngCore;
-use std::iter::{self, ExactSizeIterator};
+use core::iter::{self, ExactSizeIterator};
 
 use super::super::{circuit::Any, ChallengeBeta, ChallengeGamma, ChallengeX};
 use super::{Argument, ProvingKey};

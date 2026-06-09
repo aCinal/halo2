@@ -6,8 +6,9 @@ use halo2_proofs::{
     plonk::{Advice, Column, Error, Expression},
 };
 
-use std::marker::PhantomData;
-use std::ops::Range;
+use alloc::vec::Vec;
+use core::marker::PhantomData;
+use core::ops::Range;
 
 pub mod cond_swap;
 pub mod decompose_running_sum;
@@ -32,7 +33,7 @@ impl<F: Field> FieldValue<F> for AssignedCell<F, F> {
 }
 
 /// Trait for a variable in the circuit.
-pub trait Var<F: Field>: Clone + std::fmt::Debug + From<AssignedCell<F, F>> {
+pub trait Var<F: Field>: Clone + core::fmt::Debug + From<AssignedCell<F, F>> {
     /// The cell at which this variable was allocated.
     fn cell(&self) -> Cell;
 
@@ -194,7 +195,7 @@ pub fn decompose_word<F: PrimeFieldBits>(
         .to_le_bits()
         .into_iter()
         .take(word_num_bits)
-        .chain(std::iter::repeat(false).take(padding))
+        .chain(core::iter::repeat(false).take(padding))
         .collect();
     assert_eq!(bits.len(), word_num_bits + padding);
 
@@ -239,6 +240,7 @@ pub fn i2lebsp<const NUM_BITS: usize>(int: u64) -> [bool; NUM_BITS] {
 
 #[cfg(test)]
 mod tests {
+    use alloc::{string::ToString, vec::Vec};
     use super::*;
     use group::ff::{Field, FromUniformBytes, PrimeField};
     use halo2_proofs::{
@@ -249,9 +251,9 @@ mod tests {
     };
     use pasta_curves::pallas;
     use proptest::prelude::*;
-    use rand::rngs::OsRng;
-    use std::convert::TryInto;
-    use std::iter;
+    use rand::{rngs::OsRng, Rng};
+    use core::convert::TryInto;
+    use core::iter;
     use uint::construct_uint;
 
     #[test]
@@ -471,7 +473,8 @@ mod tests {
     #[test]
     fn i2lebsp_round_trip() {
         {
-            let bitstring = (0..64).map(|_| rand::random()).collect::<Vec<_>>();
+            let mut rng = rand::rngs::OsRng;
+            let bitstring = (0..64).map(|_| rng.gen::<bool>()).collect::<Vec<_>>();
             assert_eq!(
                 i2lebsp::<64>(lebs2ip::<64>(&bitstring.clone().try_into().unwrap())).to_vec(),
                 bitstring

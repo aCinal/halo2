@@ -10,9 +10,11 @@ use halo2_proofs::pasta::{Eq, EqAffine, Fp};
 #[cfg(feature = "unstable-verifier-fingerprint")]
 use halo2_proofs::plonk::fingerprint::{capture_proof_fingerprint, ChallengeRecorder};
 use halo2_proofs::plonk::{
-    create_proof, keygen_pk, keygen_vk, verify_proof, Advice, Assigned, BatchVerifier, Circuit,
-    Column, ConstraintSystem, Error, Fixed, SingleVerifier, TableColumn, VerificationStrategy,
+    create_proof, keygen_pk, keygen_vk, verify_proof, Advice, Assigned, Circuit, Column,
+    ConstraintSystem, Error, Fixed, SingleVerifier, TableColumn, VerificationStrategy,
 };
+#[cfg(feature = "batch")]
+use halo2_proofs::plonk::BatchVerifier;
 use halo2_proofs::poly::commitment::{Guard, MSM};
 use halo2_proofs::poly::{commitment::Params, Rotation};
 use halo2_proofs::transcript::{Blake2bRead, Blake2bWrite, Challenge255, EncodedChallenge};
@@ -646,6 +648,7 @@ fn plonk_api() {
         // Test batch-verifier strategy.
         //
 
+        #[cfg(feature = "batch")]
         {
             let mut batch = BatchVerifier::new();
 

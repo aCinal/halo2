@@ -3,10 +3,10 @@
 //!
 //! [halo]: https://eprint.iacr.org/2019/1021
 
-use std::collections::{BTreeMap, BTreeSet};
-use std::hash::Hash;
+use alloc::collections::{BTreeMap, BTreeSet};
+use core::hash::Hash;
 
-use indexmap::IndexMap;
+use crate::collections::VecMap as IndexMap;
 
 use super::*;
 use crate::{arithmetic::CurveAffine, transcript::ChallengeScalar};
@@ -95,9 +95,9 @@ impl<'r, 'params: 'r, C: CurveAffine> PartialEq for CommitmentReference<'r, 'par
     fn eq(&self, other: &Self) -> bool {
         match (self, other) {
             (&CommitmentReference::Commitment(a), &CommitmentReference::Commitment(b)) => {
-                std::ptr::eq(a, b)
+                core::ptr::eq(a, b)
             }
-            (&CommitmentReference::MSM(a), &CommitmentReference::MSM(b)) => std::ptr::eq(a, b),
+            (&CommitmentReference::MSM(a), &CommitmentReference::MSM(b)) => core::ptr::eq(a, b),
             _ => false,
         }
     }
@@ -106,10 +106,10 @@ impl<'r, 'params: 'r, C: CurveAffine> PartialEq for CommitmentReference<'r, 'par
 impl<'r, 'params: 'r, C: CurveAffine> Eq for CommitmentReference<'r, 'params, C> {}
 
 impl<'r, 'params: 'r, C: CurveAffine> Hash for CommitmentReference<'r, 'params, C> {
-    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+    fn hash<H: core::hash::Hasher>(&self, state: &mut H) {
         match *self {
-            CommitmentReference::Commitment(a) => std::ptr::hash(a, state),
-            CommitmentReference::MSM(a) => std::ptr::hash(a, state),
+            CommitmentReference::Commitment(a) => core::ptr::hash(a, state),
+            CommitmentReference::MSM(a) => core::ptr::hash(a, state),
         }
     }
 }
@@ -323,7 +323,7 @@ fn test_roundtrip() {
         &params,
         rng,
         &mut transcript,
-        std::iter::empty()
+        core::iter::empty()
             .chain(Some(ProverQuery {
                 point: x,
                 poly: &ax,
@@ -352,7 +352,7 @@ fn test_roundtrip() {
         let guard = verify_proof(
             &params,
             &mut transcript,
-            std::iter::empty()
+            core::iter::empty()
                 .chain(Some(VerifierQuery::new_commitment(&a, x, avx)))
                 .chain(Some(VerifierQuery::new_commitment(&b, x, avx))) // NB: wrong!
                 .chain(Some(VerifierQuery::new_commitment(&c, y, cvy))),
@@ -374,7 +374,7 @@ fn test_roundtrip() {
         let guard = verify_proof(
             &params,
             &mut transcript,
-            std::iter::empty()
+            core::iter::empty()
                 .chain(Some(VerifierQuery::new_commitment(&a, x, avx)))
                 .chain(Some(VerifierQuery::new_commitment(&b, x, bvx)))
                 .chain(Some(VerifierQuery::new_commitment(&c, y, cvy))),
@@ -437,7 +437,7 @@ fn test_identical_queries() {
         &params,
         rng,
         &mut transcript,
-        std::iter::empty()
+        core::iter::empty()
             .chain(Some(ProverQuery {
                 point: x,
                 poly: &ax,
@@ -468,7 +468,7 @@ fn test_identical_queries() {
             verify_proof(
                 &params,
                 &mut transcript,
-                std::iter::empty()
+                core::iter::empty()
                     .chain(Some(VerifierQuery::new_commitment(&a, x, avx)))
                     .chain(Some(VerifierQuery::new_commitment(&b, x, bvx_bad))) // This is wrong.
                     .chain(Some(VerifierQuery::new_commitment(&b, x, bvx)))
@@ -482,6 +482,7 @@ fn test_identical_queries() {
 
 #[cfg(test)]
 mod proptests {
+    use alloc::vec::Vec;
     use group::ff::FromUniformBytes;
     use proptest::{
         collection::{hash_set, vec},
@@ -492,7 +493,7 @@ mod proptests {
     use super::construct_intermediate_sets;
     use pasta_curves::Fp;
 
-    use std::convert::TryFrom;
+    use core::convert::TryFrom;
 
     #[derive(Debug, Clone)]
     struct MyQuery<F> {

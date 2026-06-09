@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use group::ff::{Field, FromUniformBytes};
 use pasta_curves::arithmetic::CurveAffine;
 use rand_core::OsRng;

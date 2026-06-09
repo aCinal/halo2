@@ -14,6 +14,7 @@
 //! Chips can be highly optimised by their developers, as long as they conform to the
 //! defined instructions.
 
+#![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 // Catch documentation errors caused by code changes.
 #![deny(rustdoc::broken_intra_doc_links)]
@@ -21,6 +22,10 @@
 #![deny(missing_docs)]
 #![deny(unsafe_code)]
 
+#[macro_use]
+extern crate alloc;
+
+mod collections;
 pub mod ecc;
 pub mod poseidon;
 #[cfg(feature = "unstable-sha256-gadget")]

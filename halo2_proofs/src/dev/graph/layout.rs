@@ -3,8 +3,8 @@ use plotters::{
     coord::Shift,
     prelude::{DrawingArea, DrawingAreaErrorKind, DrawingBackend},
 };
-use std::collections::HashSet;
-use std::ops::Range;
+use crate::collections::HashSet;
+use core::ops::Range;
 
 use crate::{
     circuit::layouter::RegionColumn,
@@ -254,7 +254,7 @@ impl CircuitLayout {
 
         // Mark equality-constrained cells.
         if self.mark_equality_cells {
-            let mut cells = HashSet::new();
+            let mut cells = HashSet::default();
             for (l_col, l_row, r_col, r_row) in &layout.equality {
                 let l_col = column_index(&cs, (*l_col).into());
                 let r_col = column_index(&cs, (*r_col).into());

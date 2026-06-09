@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use super::super::{
     circuit::Expression, ChallengeBeta, ChallengeGamma, ChallengeTheta, ChallengeX, Error,
     ProvingKey,
@@ -19,8 +20,8 @@ use group::{
     Curve,
 };
 use rand_core::RngCore;
-use std::{
-    collections::BTreeMap,
+use alloc::collections::BTreeMap;
+use core::{
     iter,
     ops::{Mul, MulAssign},
 };

@@ -1,6 +1,8 @@
 //! The [Sinsemilla] hash function.
 //!
 //! [Sinsemilla]: https://zips.z.cash/protocol/protocol.pdf#concretesinsemillahash
+
+use alloc::vec::Vec;
 use crate::{
     ecc::{self, EccInstructions, FixedPoints},
     utilities::{FieldValue, RangeConstrained, Var},
@@ -11,7 +13,7 @@ use halo2_proofs::{
     plonk::Error,
 };
 use pasta_curves::arithmetic::CurveAffine;
-use std::fmt::Debug;
+use core::fmt::Debug;
 
 pub mod chip;
 pub mod merkle;
@@ -522,12 +524,13 @@ where
 
 #[cfg(test)]
 pub(crate) mod tests {
+    use alloc::vec::Vec;
     use halo2_proofs::{
         circuit::{Layouter, SimpleFloorPlanner, Value},
         dev::MockProver,
         plonk::{Circuit, ConstraintSystem, Error},
     };
-    use rand::rngs::OsRng;
+    use rand::{rngs::OsRng, Rng};
 
     use super::{
         chip::{SinsemillaChip, SinsemillaConfig},
@@ -551,8 +554,8 @@ pub(crate) mod tests {
     use lazy_static::lazy_static;
     use pasta_curves::pallas;
 
-    use std::convert::TryInto;
-    use std::marker::PhantomData;
+    use core::convert::TryInto;
+    use core::marker::PhantomData;
 
     pub(crate) const PERSONALIZATION: &str = "MerkleCRH";
 
@@ -678,7 +681,7 @@ pub(crate) mod tests {
         config: EccSinsemillaConfig<Lookup>,
         mut layouter: impl Layouter<pallas::Base>,
     ) -> Result<(), Error> {
-        let rng = OsRng;
+        let mut rng = OsRng;
 
         let ecc_chip = EccChip::construct(config.0, CircuitVersion::AnchoredBase);
 
@@ -705,7 +708,7 @@ pub(crate) mod tests {
 
             // Left leaf
             let left_bitstring: Vec<Value<bool>> = (0..250)
-                .map(|_| Value::known(rand::random::<bool>()))
+                .map(|_| Value::known(rng.gen::<bool>()))
                 .collect();
             let left = MessagePiece::from_bitstring(
                 chip1.clone(),
@@ -715,7 +718,7 @@ pub(crate) mod tests {
 
             // Right leaf
             let right_bitstring: Vec<Value<bool>> = (0..250)
-                .map(|_| Value::known(rand::random::<bool>()))
+                .map(|_| Value::known(rng.gen::<bool>()))
                 .collect();
             let right = MessagePiece::from_bitstring(
                 chip1.clone(),
@@ -764,7 +767,7 @@ pub(crate) mod tests {
             let test_commit = CommitDomain::new(chip2.clone(), ecc_chip.clone(), &TestCommitDomain);
             let r_val = pallas::Scalar::random(rng);
             let message: Vec<Value<bool>> = (0..500)
-                .map(|_| Value::known(rand::random::<bool>()))
+                .map(|_| Value::known(rng.gen::<bool>()))
                 .collect();
 
             let (result, _) = {

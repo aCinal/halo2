@@ -49,21 +49,22 @@ harness = false
 
 [dependencies]
 backtrace = { version = "0.3", optional = true }
-ff = "0.13"
-group = "0.13"
-indexmap = "1"
-pasta_curves = "0.5"
+ff = { version = "0.13", default-features = false, features = ["alloc"] }
+group = { version = "0.13", default-features = false, features = ["alloc"] }
+hashbrown = { version = "0.12", default-features = false, features = ["inline-more"] }
+pasta_curves = { version = "0.5", default-features = false, features = ["alloc", "bits"] }
 rand_core = { version = "0.6", default-features = false }
-tracing = "0.1"
-blake2b_simd = "1"
-maybe-rayon = {version = "0.1.0", default-features = false}
+tracing = { version = "0.1", default-features = false }
+blake2b_simd = { version = "1", default-features = false }
+libm = { version = "0.2", default-features = false }
+maybe-rayon = { version = "0.1.0", default-features = false, optional = true }
 
 # Developer tooling dependencies
 plotters = { version = "0.3.0", default-features = false, optional = true }
 tabbycat = { version = "0.1", features = ["attributes"], optional = true }
 
 # Legacy circuit compatibility
-halo2_legacy_pdqsort = { version = "0.1.0", optional = true }
+halo2_legacy_pdqsort = { git = "https://github.com/aCinal/halo2_legacy_pdqsort", branch = "no_std", optional = true }
 
 [dev-dependencies]
 assert_matches = "1.5"
@@ -82,7 +83,8 @@ getrandom = { version = "0.2", features = ["js"] }
 
 [features]
 default = ["batch", "multicore"]
-multicore = ["maybe-rayon/threads"]
+std = []
+multicore = ["std", "maybe-rayon", "maybe-rayon/threads"]
 dev-graph = ["plotters", "tabbycat"]
 test-dev-graph = [
     "dev-graph",
@@ -105,7 +107,7 @@ nightly = [
 ]
 # Capture-only tooling that exposes the assembled verifier MSM fingerprint and
 # exports it as a Lean fixture. Off by default; does not affect proof acceptance.
-unstable-verifier-fingerprint = []
+unstable-verifier-fingerprint = ["std"]
 # Add flags for in-development features above this line.
 
 [lib]

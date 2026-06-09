@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use super::super::{EccPoint, EccScalarFixed, FixedPoints, FIXED_BASE_WINDOW_SIZE, H, NUM_WINDOWS};
 
 use crate::utilities::{decompose_word, range_check};

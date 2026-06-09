@@ -6,7 +6,8 @@ use halo2_proofs::{
     plonk::{Advice, Column, ConstraintSystem, Constraints, Error, Selector, TableColumn},
     poly::Rotation,
 };
-use std::{convert::TryInto, fmt::Debug, marker::PhantomData};
+use alloc::vec::Vec;
+use core::{convert::TryInto, fmt::Debug, marker::PhantomData};
 
 use ff::PrimeFieldBits;
 
@@ -19,7 +20,7 @@ use super::*;
 /// The running sum $[z_0, ..., z_W]$. If created in strict mode, $z_W = 0$.
 #[derive(Debug)]
 pub struct RunningSum<F: PrimeFieldBits>(Vec<AssignedCell<F, F>>);
-impl<F: PrimeFieldBits> std::ops::Deref for RunningSum<F> {
+impl<F: PrimeFieldBits> core::ops::Deref for RunningSum<F> {
     type Target = Vec<AssignedCell<F, F>>;
 
     fn deref(&self) -> &Vec<AssignedCell<F, F>> {
@@ -860,6 +861,7 @@ impl PallasLookupRangeCheck for PallasLookupRangeCheck4_5BConfig {}
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec::Vec;
     use super::super::lebs2ip;
 
     use ff::{Field, PrimeFieldBits};
@@ -878,7 +880,7 @@ mod tests {
             PallasLookupRangeCheckConfig,
         },
     };
-    use std::{convert::TryInto, marker::PhantomData};
+    use core::{convert::TryInto, marker::PhantomData};
 
     #[derive(Clone, Copy)]
     struct MyLookupCircuit<F: PrimeFieldBits, Lookup: LookupRangeCheck<F, K>> {
@@ -895,7 +897,7 @@ mod tests {
         }
     }
 
-    impl<F: PrimeFieldBits, Lookup: LookupRangeCheck<F, K> + std::clone::Clone> Circuit<F>
+    impl<F: PrimeFieldBits, Lookup: LookupRangeCheck<F, K> + core::clone::Clone> Circuit<F>
         for MyLookupCircuit<F, Lookup>
     {
         type Config = Lookup;
@@ -1018,7 +1020,7 @@ mod tests {
         }
     }
 
-    impl<F: PrimeFieldBits, Lookup: LookupRangeCheck<F, K> + std::clone::Clone> Circuit<F>
+    impl<F: PrimeFieldBits, Lookup: LookupRangeCheck<F, K> + core::clone::Clone> Circuit<F>
         for MyShortRangeCheckCircuit<F, Lookup>
     {
         type Config = Lookup;

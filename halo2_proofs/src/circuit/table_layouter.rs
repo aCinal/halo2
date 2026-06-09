@@ -1,9 +1,9 @@
 //! Implementations of common table layouters.
 
-use std::{
-    collections::HashMap,
-    fmt::{self, Debug},
-};
+use alloc::string::String;
+use alloc::vec::Vec;
+use core::fmt::{self, Debug};
+use crate::collections::HashMap;
 
 use ff::Field;
 
@@ -16,7 +16,7 @@ use super::Value;
 /// This trait is used for implementing table assignments.
 ///
 /// [`Layouter`]: super::Layouter
-pub trait TableLayouter<F: Field>: std::fmt::Debug {
+pub trait TableLayouter<F: Field>: core::fmt::Debug {
     /// Assigns a fixed value to a table cell.
     ///
     /// Returns an error if the table cell has already been assigned to.

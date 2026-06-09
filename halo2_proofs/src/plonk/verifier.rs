@@ -1,6 +1,7 @@
+use alloc::vec::Vec;
 use ff::Field;
 use group::Curve;
-use std::iter;
+use core::iter;
 
 use super::{
     vanishing, ChallengeBeta, ChallengeGamma, ChallengeTheta, ChallengeX, ChallengeY, Error,
@@ -224,7 +225,7 @@ pub fn verify_proof<
             .zip(lookups_evaluated.iter())
             .flat_map(|(((advice_evals, instance_evals), permutation), lookups)| {
                 let fixed_evals = &fixed_evals;
-                std::iter::empty()
+                core::iter::empty()
                     // Evaluate the circuit using the custom gates provided
                     .chain(vk.cs.gates.iter().flat_map(move |gate| {
                         gate.polynomials().iter().map(move |poly| {

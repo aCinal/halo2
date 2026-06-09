@@ -1,9 +1,10 @@
+use alloc::vec::Vec;
 use super::{add, CircuitVersion, EccPoint, NonIdentityEccPoint, ScalarVar, T_Q};
 use crate::utilities::{
     lookup_range_check::{PallasLookupRangeCheck, PallasLookupRangeCheckConfig},
     {bool_check, ternary},
 };
-use std::{
+use core::{
     convert::TryInto,
     ops::{Deref, Range},
 };
@@ -277,7 +278,7 @@ impl<Lookup: PallasLookupRangeCheck> Config<Lookup> {
                 }
 
                 let zs = {
-                    let mut zs = std::iter::empty()
+                    let mut zs = core::iter::empty()
                         .chain(Some(z_init))
                         .chain(zs_incomplete_hi)
                         .chain(zs_incomplete_lo)
@@ -488,7 +489,7 @@ pub mod tests {
         let column = chip.config().advices[0];
 
         fn constrain_equal_non_id<
-            EccChip: EccInstructions<pallas::Affine, Point = EccPoint> + Clone + Eq + std::fmt::Debug,
+            EccChip: EccInstructions<pallas::Affine, Point = EccPoint> + Clone + Eq + core::fmt::Debug,
         >(
             chip: EccChip,
             mut layouter: impl Layouter<pallas::Base>,
@@ -613,8 +614,8 @@ pub mod tests {
                 FloorPlanner, Instance, Selector,
             },
         };
+        use alloc::{collections::BTreeSet, string::String, vec::Vec};
         use pasta_curves::pallas;
-        use std::collections::BTreeSet;
 
         /// An `Assignment` that records the copy constraints and selector enables, so a test
         /// can inspect both which equality constraints and at which rows they were emitted.

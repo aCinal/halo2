@@ -1,4 +1,6 @@
-use std::fmt;
+use alloc::string::String;
+use alloc::vec::Vec;
+use core::fmt;
 
 use ff::Field;
 

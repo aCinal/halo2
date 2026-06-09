@@ -1,6 +1,7 @@
 //! Contains utilities for performing polynomial arithmetic over an evaluation
 //! domain that is of a suitable size for the application.
 
+use alloc::vec::Vec;
 use crate::{
     arithmetic::{best_fft, parallelize},
     plonk::Assigned,
@@ -11,7 +12,7 @@ use super::{Coeff, ExtendedLagrangeCoeff, LagrangeCoeff, Polynomial, Rotation};
 use ff::WithSmallOrderMulGroup;
 use group::ff::{BatchInvert, Field};
 
-use std::marker::PhantomData;
+use core::marker::PhantomData;
 
 /// This structure contains precomputed constants and other details needed for
 /// performing operations on an evaluation domain of size $2^k$ and an extended

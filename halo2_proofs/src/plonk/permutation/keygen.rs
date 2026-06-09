@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use group::{
     ff::{Field, PrimeField},
     Curve,
@@ -78,7 +79,7 @@ impl Assembly {
         }
 
         if self.sizes[left_cycle.0][left_cycle.1] < self.sizes[right_cycle.0][right_cycle.1] {
-            std::mem::swap(&mut left_cycle, &mut right_cycle);
+            core::mem::swap(&mut left_cycle, &mut right_cycle);
         }
 
         // Merge the right cycle into the left one.

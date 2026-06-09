@@ -13,7 +13,7 @@ use halo2_proofs::{
 };
 use pasta_curves::pallas;
 
-use std::iter;
+use core::iter;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub struct Config<Lookup: PallasLookupRangeCheck = PallasLookupRangeCheckConfig> {

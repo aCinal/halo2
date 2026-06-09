@@ -1,5 +1,8 @@
-use std::collections::{BTreeMap, HashSet};
-use std::fmt;
+use alloc::string::{String, ToString};
+use alloc::vec::Vec;
+use alloc::collections::BTreeMap;
+use core::fmt;
+use crate::collections::HashSet;
 
 use group::ff::Field;
 
@@ -459,7 +462,6 @@ fn render_lookup<F: Field>(
         eprint!("{}{}", if i == 0 { "" } else { ", " }, column);
     }
     eprintln!(")");
-
     eprintln!();
     eprintln!("  Lookup inputs:");
     for (i, input) in lookup.input_expressions.iter().enumerate() {
@@ -497,13 +499,13 @@ fn render_lookup<F: Field>(
         // - The grid of cell values, indexed by rotation.
         let mut columns = BTreeMap::<metadata::Column, usize>::default();
         let mut layout = BTreeMap::<i32, BTreeMap<metadata::Column, _>>::default();
-        for (i, (cell, _)) in cell_values.iter().enumerate() {
+        for (j, (cell, _)) in cell_values.iter().enumerate() {
             *columns.entry(cell.column).or_default() += 1;
             layout
                 .entry(cell.rotation)
                 .or_default()
                 .entry(cell.column)
-                .or_insert(format!("x{}", i));
+                .or_insert(format!("x{}", j));
         }
 
         if i != 0 {
@@ -520,12 +522,10 @@ fn render_lookup<F: Field>(
                 eprint!(" <--{{ Lookup inputs queried here");
             }
         });
-
-        // Print the map from local variables to assigned values.
         eprintln!("    |");
         eprintln!("    | Assigned cell values:");
-        for (i, (_, value)) in cell_values.iter().enumerate() {
-            eprintln!("    |   x{} = {}", i, value);
+        for (j, (_, value)) in cell_values.iter().enumerate() {
+            eprintln!("    |   x{} = {}", j, value);
         }
     }
 }

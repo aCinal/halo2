@@ -31,12 +31,13 @@ use halo2_proofs::{
 
 use super::range_check;
 
-use std::marker::PhantomData;
+use alloc::vec::Vec;
+use core::marker::PhantomData;
 
 /// The running sum $[z_0, ..., z_W]$. If created in strict mode, $z_W = 0$.
 #[derive(Debug)]
 pub struct RunningSum<F: PrimeFieldBits>(Vec<AssignedCell<F, F>>);
-impl<F: PrimeFieldBits> std::ops::Deref for RunningSum<F> {
+impl<F: PrimeFieldBits> core::ops::Deref for RunningSum<F> {
     type Target = Vec<AssignedCell<F, F>>;
 
     fn deref(&self) -> &Vec<AssignedCell<F, F>> {
@@ -215,7 +216,7 @@ mod tests {
         plonk::{Any, Circuit, ConstraintSystem, Error},
     };
     use pasta_curves::pallas;
-    use rand::rngs::OsRng;
+    use rand::{rngs::OsRng, Rng};
 
     use crate::ecc::chip::{
         FIXED_BASE_WINDOW_SIZE, L_SCALAR_SHORT as L_SHORT, NUM_WINDOWS, NUM_WINDOWS_SHORT,
@@ -313,7 +314,7 @@ mod tests {
 
         // Random 64-bit word
         {
-            let alpha = pallas::Base::from(rand::random::<u64>());
+            let alpha = pallas::Base::from({ let mut rng = rand::rngs::OsRng; rng.gen::<u64>() });
 
             // Strict full decomposition should pass.
             let circuit: MyCircuit<

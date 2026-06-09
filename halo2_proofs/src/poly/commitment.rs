@@ -9,7 +9,8 @@ use crate::helpers::CurveRead;
 
 use ff::{Field, PrimeField};
 use group::{prime::PrimeCurveAffine, Curve, Group};
-use std::ops::{Add, AddAssign, Mul, MulAssign};
+use alloc::vec::Vec;
+use core::ops::{Add, AddAssign, Mul, MulAssign};
 
 mod msm;
 mod prover;
@@ -19,7 +20,7 @@ pub use msm::MSM;
 pub use prover::create_proof;
 pub use verifier::{verify_proof, Accumulator, Guard};
 
-use std::io;
+use crate::io;
 
 /// These are the public parameters for the polynomial commitment scheme.
 #[derive(Clone, Debug)]

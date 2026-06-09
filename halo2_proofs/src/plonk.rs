@@ -37,7 +37,8 @@ pub use keygen::*;
 pub use prover::*;
 pub use verifier::*;
 
-use std::io;
+use alloc::vec::Vec;
+use crate::io;
 
 /// This is a verifying key which allows for the verification of proofs for a
 /// particular circuit.

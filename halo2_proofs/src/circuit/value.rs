@@ -1,5 +1,6 @@
-use std::borrow::Borrow;
-use std::ops::{Add, Mul, Neg, Sub};
+use alloc::vec::Vec;
+use core::borrow::Borrow;
+use core::ops::{Add, Mul, Neg, Sub};
 
 use group::ff::Field;
 
@@ -64,6 +65,7 @@ impl<V> Value<V> {
     }
 
     /// ONLY FOR INTERNAL CRATE USAGE; DO NOT EXPOSE!
+    #[cfg(feature = "std")]
     pub(crate) fn into_option(self) -> Option<V> {
         self.inner
     }

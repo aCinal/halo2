@@ -7,9 +7,10 @@ use crate::plonk::Assigned;
 
 use group::ff::{BatchInvert, Field};
 
-use std::fmt::Debug;
-use std::marker::PhantomData;
-use std::ops::{Add, Deref, DerefMut, Index, IndexMut, Mul, RangeFrom, RangeFull};
+use alloc::vec::Vec;
+use core::fmt::Debug;
+use core::marker::PhantomData;
+use core::ops::{Add, Deref, DerefMut, Index, IndexMut, Mul, RangeFrom, RangeFull};
 
 pub mod commitment;
 mod domain;

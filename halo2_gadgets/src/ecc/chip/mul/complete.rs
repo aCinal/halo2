@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use super::super::{add, EccPoint};
 use super::{COMPLETE_RANGE, X, Y, Z};
 use crate::utilities::{bool_check, ternary};

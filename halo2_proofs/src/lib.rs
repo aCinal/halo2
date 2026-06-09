@@ -1,5 +1,6 @@
 //! # halo2_proofs
 
+#![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 // The actual lints we want to disable.
 #![allow(clippy::op_ref, clippy::many_single_char_names)]
@@ -8,13 +9,18 @@
 #![deny(missing_docs)]
 #![deny(unsafe_code)]
 
+#[macro_use]
+extern crate alloc;
+
 pub mod arithmetic;
 pub mod circuit;
+pub mod io;
+mod collections;
 pub use pasta_curves as pasta;
 mod multicore;
 pub mod plonk;
 pub mod poly;
 pub mod transcript;
-
+#[cfg(feature = "std")]
 pub mod dev;
 mod helpers;

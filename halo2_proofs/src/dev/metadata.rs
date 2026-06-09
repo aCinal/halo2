@@ -1,7 +1,9 @@
 //! Metadata about circuits.
 
+use alloc::string::String;
+use alloc::borrow::ToOwned;
 use crate::plonk::{self, Any};
-use std::fmt;
+use core::fmt;
 
 /// Metadata about a column within a circuit.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]

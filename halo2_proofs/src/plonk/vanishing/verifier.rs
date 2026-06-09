@@ -1,4 +1,5 @@
-use std::iter;
+use alloc::vec::Vec;
+use core::iter;
 
 use ff::Field;
 

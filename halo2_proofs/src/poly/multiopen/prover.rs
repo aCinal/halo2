@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use super::super::{
     commitment::{self, Blind, Params},
     Coeff, Polynomial,
@@ -13,9 +14,9 @@ use crate::transcript::{EncodedChallenge, TranscriptWrite};
 use ff::Field;
 use group::Curve;
 use rand_core::RngCore;
-use std::hash::Hash;
-use std::io;
-use std::marker::PhantomData;
+use core::hash::Hash;
+use core::marker::PhantomData;
+use crate::io;
 
 /// Create a multi-opening proof
 pub fn create_proof<
@@ -130,15 +131,15 @@ pub struct PolynomialPointer<'a, C: CurveAffine> {
 
 impl<'a, C: CurveAffine> PartialEq for PolynomialPointer<'a, C> {
     fn eq(&self, other: &Self) -> bool {
-        std::ptr::eq(self.poly, other.poly)
+        core::ptr::eq(self.poly, other.poly)
     }
 }
 
 impl<'a, C: CurveAffine> Eq for PolynomialPointer<'a, C> {}
 
 impl<'a, C: CurveAffine> Hash for PolynomialPointer<'a, C> {
-    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
-        std::ptr::hash(self.poly, state)
+    fn hash<H: core::hash::Hasher>(&self, state: &mut H) {
+        core::ptr::hash(self.poly, state)
     }
 }
 

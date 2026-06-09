@@ -1,7 +1,9 @@
-use std::cmp;
-use std::collections::HashMap;
-use std::fmt;
-use std::marker::PhantomData;
+use alloc::string::String;
+use alloc::vec::Vec;
+use core::cmp;
+use core::fmt;
+use core::marker::PhantomData;
+use crate::collections::HashMap;
 
 use ff::Field;
 

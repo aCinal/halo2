@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use super::super::{CircuitVersion, NonIdentityEccPoint};
 use super::{X, Y, Z};
 use crate::utilities::bool_check;
@@ -161,7 +162,7 @@ impl<const NUM_BITS: usize> Config<NUM_BITS> {
             // λ_{2,i}⋅(x_{A,i} − x_{A,i-1}) − y_{A,i} − y_{A,i-1} = 0
             let gradient_2 = lambda2_cur * (x_a_cur - x_a_next) - y_a_cur - y_a_next;
 
-            std::iter::empty()
+            core::iter::empty()
                 .chain(Some(("bool_check", bool_check)))
                 .chain(Some(("gradient_1", gradient_1)))
                 .chain(Some(("secant_line", secant_line)))
@@ -201,7 +202,7 @@ impl<const NUM_BITS: usize> Config<NUM_BITS> {
 
             Constraints::with_selector(
                 q_mul_2,
-                std::iter::empty()
+                core::iter::empty()
                     .chain(Some(("x_p_check", x_p_check)))
                     .chain(Some(("y_p_check", y_p_check)))
                     .chain(for_loop(meta, y_a_next)),

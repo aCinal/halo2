@@ -1,8 +1,10 @@
+use alloc::string::String;
+use alloc::vec::Vec;
 use ff::Field;
 use group::Curve;
 use rand_core::RngCore;
-use std::iter;
-use std::ops::RangeTo;
+use core::iter;
+use core::ops::RangeTo;
 
 use super::{
     circuit::{
@@ -141,7 +143,7 @@ pub fn create_proof<
                 pub advice: Vec<Polynomial<Assigned<F>, LagrangeCoeff>>,
                 instances: &'a [&'a [F]],
                 usable_rows: RangeTo<usize>,
-                _marker: std::marker::PhantomData<F>,
+                _marker: core::marker::PhantomData<F>,
             }
 
             impl<'a, F: Field> Assignment<F> for WitnessCollection<'a, F> {
@@ -277,7 +279,7 @@ pub fn create_proof<
                 // number of blinding factors and an extra row for use in the
                 // permutation argument.
                 usable_rows: ..unusable_rows_start,
-                _marker: std::marker::PhantomData,
+                _marker: core::marker::PhantomData,
             };
 
             // Synthesize the circuit to obtain the witness and other information.

@@ -1,10 +1,11 @@
+use alloc::vec::Vec;
 use super::{
     add, add_incomplete, EccBaseFieldElemFixed, EccScalarFixed, EccScalarFixedShort, FixedPoint,
     NonIdentityEccPoint, FIXED_BASE_WINDOW_SIZE, H,
 };
 use crate::utilities::decompose_running_sum::RunningSumConfig;
 
-use std::marker::PhantomData;
+use core::marker::PhantomData;
 
 use group::{
     ff::{Field, PrimeField, PrimeFieldBits},

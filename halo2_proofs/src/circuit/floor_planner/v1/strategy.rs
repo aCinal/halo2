@@ -1,8 +1,7 @@
-use std::{
-    cmp,
-    collections::{BTreeSet, HashMap},
-    ops::Range,
-};
+use alloc::vec::Vec;
+use core::{cmp, ops::Range};
+use alloc::collections::BTreeSet;
+use crate::collections::HashMap;
 
 use super::{RegionColumn, RegionShape};
 use crate::{circuit::RegionStart, plonk::Any};
@@ -99,7 +98,7 @@ impl Allocations {
 }
 
 /// Allocated rows within a circuit.
-pub type CircuitAllocations = HashMap<RegionColumn, Allocations>;
+pub(crate) type CircuitAllocations = HashMap<RegionColumn, Allocations>;
 
 /// - `start` is the current start row of the region (not of this column).
 /// - `slack` is the maximum number of rows the start could be moved down, taking into
@@ -195,7 +194,7 @@ fn slot_in(
 }
 
 /// Sorts the regions by advice area and then lays them out with the [`slot_in`] strategy.
-pub fn slot_in_biggest_advice_first(
+pub(crate) fn slot_in_biggest_advice_first(
     region_shapes: Vec<RegionShape>,
 ) -> (Vec<RegionStart>, CircuitAllocations) {
     let mut sorted_regions: Vec<_> = region_shapes.into_iter().collect();

@@ -1,4 +1,6 @@
-use std::{fmt, marker::PhantomData};
+use alloc::string::String;
+use alloc::vec::Vec;
+use core::{fmt, marker::PhantomData};
 
 use ff::Field;
 use tracing::{debug, debug_span, span::EnteredSpan};

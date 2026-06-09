@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use super::circuit::{Any, Column};
 use crate::{
     arithmetic::CurveAffine,
@@ -64,6 +65,7 @@ impl Argument {
         }
     }
 
+    #[cfg(feature = "std")]
     pub(crate) fn get_columns(&self) -> Vec<Column<Any>> {
         self.columns.clone()
     }

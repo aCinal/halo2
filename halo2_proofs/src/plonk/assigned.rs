@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Mul, MulAssign, Neg, Sub, SubAssign};
+use core::ops::{Add, AddAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 use group::ff::Field;
 
@@ -445,7 +445,8 @@ mod tests {
 
 #[cfg(test)]
 mod proptests {
-    use std::{
+    use alloc::vec::Vec;
+    use core::{
         cmp,
         ops::{Add, Mul, Neg, Sub},
     };

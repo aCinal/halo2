@@ -173,6 +173,7 @@ where
 #[cfg(test)]
 /// Sinsemilla Merkle tree tests.
 pub mod tests {
+    use alloc::vec::Vec;
     use super::{
         chip::{MerkleChip, MerkleConfig},
         MerklePath,
@@ -205,7 +206,7 @@ pub mod tests {
     };
 
     use rand::{rngs::OsRng, RngCore};
-    use std::{convert::TryInto, iter, marker::PhantomData};
+    use core::{convert::TryInto, iter, marker::PhantomData};
 
     const MERKLE_DEPTH: usize = 32;
 

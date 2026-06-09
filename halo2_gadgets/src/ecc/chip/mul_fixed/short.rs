@@ -1,4 +1,4 @@
-use std::convert::TryInto;
+use core::convert::TryInto;
 
 use super::super::{EccPoint, EccScalarFixedShort, FixedPoints, L_SCALAR_SHORT, NUM_WINDOWS_SHORT};
 use crate::{ecc::chip::MagnitudeSign, utilities::bool_check};
@@ -307,6 +307,7 @@ impl<Fixed: FixedPoints<pallas::Affine>> Config<Fixed> {
 
 #[cfg(test)]
 pub mod tests {
+    use alloc::string::{String, ToString};
     use group::{ff::PrimeField, Curve, Group};
     use halo2_proofs::{
         arithmetic::CurveAffine,
@@ -315,7 +316,8 @@ pub mod tests {
         plonk::{Any, Circuit, ConstraintSystem, Error},
     };
     use pasta_curves::pallas;
-    use std::marker::PhantomData;
+    use rand::Rng;
+    use core::marker::PhantomData;
 
     use crate::{
         ecc::{
@@ -374,10 +376,11 @@ pub mod tests {
             result.constrain_equal(layouter.namespace(|| "constrain result"), &expected)
         }
 
+        let mut rng = rand::rngs::OsRng;
         let magnitude_signs = [
-            ("random [a]B", pallas::Base::from(rand::random::<u64>()), {
+            ("random [a]B", pallas::Base::from(rng.gen::<u64>()), {
                 let mut random_sign = pallas::Base::one();
-                if rand::random::<bool>() {
+                if rng.gen::<bool>() {
                     random_sign = -random_sign;
                 }
                 random_sign
@@ -681,7 +684,7 @@ pub mod tests {
 
             // Sign that is not +/- 1 should fail
             {
-                let magnitude_u64 = rand::random::<u64>();
+                let magnitude_u64 = { let mut rng = rand::rngs::OsRng; rng.gen::<u64>() };
                 let circuit: MyMagnitudeSignCircuit<Lookup> = MyMagnitudeSignCircuit {
                     magnitude: Value::known(pallas::Base::from(magnitude_u64)),
                     sign: Value::known(pallas::Base::zero()),
